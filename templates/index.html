@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creature Type Generator</title>
+    <style>
+        #history {
+            margin-top: 20px;
+            max-height: 200px;
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background: #fafafa;
+        }
+        #history-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        #history-list li {
+            padding: 4px 0;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Magic: The Gathering Creature Type Generator</h1>
+    <button id="fetchData">Generate Creature Type</button>
+    <p id="response"></p>
+
+    <div id="history">
+        <strong>Previously Generated:</strong>
+        <ul id="history-list"></ul>
+    </div>
+
+    <script>
+        document.getElementById('fetchData').addEventListener('click', function() {
+            fetch('/api/generate')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.creature_type) {
+                        document.getElementById('response').innerText = "Generated Creature Type: " + data.creature_type;
+                        // Add to history list
+                        const li = document.createElement('li');
+                        li.textContent = data.creature_type;
+                        document.getElementById('history-list').prepend(li);
+                    } else if (data.error) {
+                        document.getElementById('response').innerText = "Error: " + data.error;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('response').innerText = "Error: " + error;
+                });
+        });
+    </script>
+</body>
+</html>

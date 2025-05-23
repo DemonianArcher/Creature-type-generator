@@ -50,10 +50,10 @@ class CreatureGeneratorApp(App):
 
     # Build the main layout of the application
     def build(self):
-        self.creature_types = self.load_creature_types("creature-types.txt")
+        self.creature_types = self.load_creature_types("creature_types.txt")
         if not self.creature_types:
             self.creature_types = ["Default Creature"]
-            print("Warning: creature-types.txt is empty or not found. Using default creature.")
+            print("Warning: creature_types.txt is empty or not found. Using default creature.")
 
         self.generated_creatures = []
         self.load_generated_creatures()  # Load from file on startup

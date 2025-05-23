@@ -7,7 +7,7 @@ import random
 import os
 
 creature_types = []
-with open("creature-types.txt", "r", encoding="utf-8") as file:
+with open("creature_types.txt", "r", encoding="utf-8") as file:
     for line in file:
         creature_types.append(line.strip())
 
