@@ -7,7 +7,7 @@ import random
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev")
-CORS(app, origins=[http://127.0.0.1:5000/]) #change url once deployed
+CORS(app, origins=["http://127.0.0.1:5000/"]) #change url once deployed
 
 # Load creature types once at startup
 with open("creature_types.txt", "r", encoding="utf-8") as file:
