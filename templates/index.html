@@ -5,36 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creature Type Generator</title>
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #181c25; /* Dark background */
+            color: #f5f5f5;      /* Light text for contrast */
+        }
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         #history {
             margin-top: 20px;
-            max-height: 200px;
+            height: 200px;
             width: 300px;
-            border: 1px solid #ccc;
+            border: 1px solid #333;
             padding: 10px;
             overflow-y: auto;
-            background: #fafafa;
+            background: #23283a; /* Slightly lighter dark for contrast */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        #history-heading {
+            position: sticky;
+            top: 0;
+            background: #23283a;
+            z-index: 1;
+            padding-bottom: 4px;
+            display: block;
+            padding-top: 4px;
         }
         #history-list {
             list-style-type: none;
             padding-left: 0;
             margin: 0;
+            flex: 1 1 auto;
+            margin-top: 4px;
         }
         #history-list li {
             padding: 4px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #444;
+            color: #e0eaff;
+        }
+        #button-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        #button-group button {
+            color: #000;
+            background-color: #b3e0ff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #button-group button:hover {
+            background-color: #7fd0ff;
+        }
+        h1 {
+            margin-bottom: 0.5em;
+            color: #b3e0ff;
+        }
+        #response {
+            min-height: 1.5em;
+            margin: 10px 0 0 0;
+            color: #fff;
         }
     </style>
 </head>
 <body>
-    <h1>Magic: The Gathering Creature Type Generator</h1>
-    <button id="fetchData">Generate Creature Type</button>
-    <p id="response"></p>
-
-    <div id="history">
-        <strong>Previously Generated:</strong>
-        <ul id="history-list"></ul>
+    <div id="container">
+        <h1>Magic: The Gathering Creature Type Generator</h1>
+        <div id="button-group">
+            <button id="fetchData">Generate Creature Type</button>
+            <button id="resetHistory">New Game</button>
+        </div>
+        <p id="response"></p>
+        <div id="history">
+            <strong id="history-heading">Previously Generated:</strong>
+            <ul id="history-list"></ul>
+        </div>
     </div>
-
     <script>
         document.getElementById('fetchData').addEventListener('click', function() {
             fetch('/api/generate')
@@ -42,16 +103,31 @@
                 .then(data => {
                     if (data.creature_type) {
                         document.getElementById('response').innerText = "Generated Creature Type: " + data.creature_type;
-                        // Add to history list
-                        const li = document.createElement('li');
-                        li.textContent = data.creature_type;
-                        document.getElementById('history-list').prepend(li);
+                        // Update history list from server
+                        const historyList = document.getElementById('history-list');
+                        historyList.innerHTML = '';
+                        data.history.forEach(item => {
+                            const li = document.createElement('li');
+                            li.textContent = item;
+                            historyList.appendChild(li);
+                        });
                     } else if (data.error) {
                         document.getElementById('response').innerText = "Error: " + data.error;
                     }
                 })
                 .catch(error => {
                     document.getElementById('response').innerText = "Error: " + error;
+                });
+        });
+
+        document.getElementById('resetHistory').addEventListener('click', function() {
+            fetch('/api/reset', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('history-list').innerHTML = '';
+                        document.getElementById('response').innerText = '';
+                    }
                 });
         });
     </script>

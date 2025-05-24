@@ -12,6 +12,4 @@ This version of the application is a web application with the frontend and backe
 
 ## Next Steps
 
-1. Tune code to get desired results displayed on the frontend page
-2. Refine the style and UI of the frontend page
-3. Host web application on an actual server to be accessed by anyone, or at least myself on my mobile device
+1. Host web application on an actual server to be accessed by anyone, or at least myself on my mobile device
