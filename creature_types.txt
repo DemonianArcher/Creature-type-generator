@@ -227,6 +227,7 @@ Scion
 Scorpion
 Scout
 Sculpture
+Seal
 Serf
 Serpent
 Servo
