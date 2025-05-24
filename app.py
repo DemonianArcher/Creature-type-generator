@@ -1,9 +1,8 @@
 """This is the flask backend for the web application version of the creature type generator app."""
 
-from flask import Flask, jsonify, render_template, session, request
+from flask import Flask, jsonify, render_template, session
 from flask_cors import CORS
 import random
-import os
 
 app = Flask(__name__)
 app.secret_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL99D4XPvNOSmAGaOrkkbYJuGvvjzoni+Qg5XxgLHqXA"
