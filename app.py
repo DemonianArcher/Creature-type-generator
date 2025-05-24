@@ -1,11 +1,12 @@
 """This is the flask backend for the web application version of the creature type generator app."""
 
+import os
 from flask import Flask, jsonify, render_template, session
 from flask_cors import CORS
 import random
 
 app = Flask(__name__)
-app.secret_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL99D4XPvNOSmAGaOrkkbYJuGvvjzoni+Qg5XxgLHqXA"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev")
 CORS(app)
 
 # Load creature types once at startup
