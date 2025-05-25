@@ -11,3 +11,7 @@ Should this application be requested by anyone for me to make publicly available
 ## Web Application Version
 
 This is the main version of the app named "app.py". This version of the application is a web application with the frontend and backend connected via flask. The current version is able to be up and running easily. The purpose of doing it this way is to use the python application I built on mobile devices. And I will be using this project as a learning experience and a reference for future projects.
+
+## Other Versions
+
+Other versions of the Creature Type Generator are the basic terminal version, and the desktop app version that uses the Kivy GUI library. They can both be run independently on any windows machine as long as the appropriate dependencies are installed.
