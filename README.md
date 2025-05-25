@@ -2,14 +2,12 @@
 
 ## Description
 
-This program has two versions, one is a simple command line version, and a version with a UI designed using Kivy. Both use the same basic program to get a random creature type from the creature-types.txt file.
+This is a simple random generator for all the creature types in MTG. It has been made specifically for use alongside a changelings only commander deck. 
 
-The intent of the project is to make a program that can be used on a mobile device, whether through an android application or hosting the application online to access via a web browser on any device.
+Example use case: "I play Herald's Horn naming *presses button* DRAGON. And because this Bloodline Pretender IS OF COURSE a DRAGON, I cast it for 1 less."
 
-## Flask Version
+Should this application be requested by anyone for me to make publicly available at all times I will endeavor to make that happen.
 
-This version of the application is a web application with the frontend and backend connected via flask. This is essentially a simple experiment for me to learn how these types of systems work and how to create and implement a python backend into a web application.
+## Web Application Version
 
-## Next Steps
-
-1. Host web application on an actual server to be accessed by anyone, or at least myself on my mobile device
+This version of the application is a web application with the frontend and backend connected via flask. The current version is able to be up and running easily. The purpose of doing it this way is to use the python application I built on mobile devices. And I will be using this project as a learning experience and a reference for future projects.

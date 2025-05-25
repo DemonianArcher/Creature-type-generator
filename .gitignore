@@ -1,2 +1,5 @@
-/.vscode
+.vscode/
 generated_creatures.txt
+__pycache__/
+app.log
+.venv/
