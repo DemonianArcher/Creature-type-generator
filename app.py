@@ -31,10 +31,19 @@ import logging
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY")
-CORS(app, origins=["http://127.0.0.1:8000/"]) # Allows CORS for the specified origin
+CORS(app, origins=[os.environ.get("CORS_ORIGIN")])  # Allows CORS for the specified origin
 
-# Configure logging
-logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s %(levelname)s:%(message)s')
+# Configure logging to work with Flask's logger
+log_formatter = logging.Formatter('%(asctime)s %(levelname)s:%(message)s')
+file_handler = logging.FileHandler('app.log')
+file_handler.setFormatter(log_formatter)
+file_handler.setLevel(logging.INFO)
+
+# Remove default handlers to avoid duplicate logs
+if app.logger.hasHandlers():
+    app.logger.handlers.clear()
+app.logger.addHandler(file_handler)
+app.logger.setLevel(logging.INFO)
 
 # Load creature types once at startup
 with open("creature_types.txt", "r", encoding="utf-8") as file:
@@ -43,7 +52,7 @@ with open("creature_types.txt", "r", encoding="utf-8") as file:
 # Logging to file "app.log"
 @app.before_request
 def log_request_info():
-    logging.info(f"{session.get('history', [])} - {request.method} {request.path} from {request.remote_addr}")
+    app.logger.info(f"{session.get('history', [])} - {request.method} {request.path} from {request.remote_addr}")
 
 # Render the main page via the template in index.html
 @app.route('/')
@@ -59,13 +68,20 @@ def generate_creature():
     history = session.get('history', [])
     history.insert(0, chosen_creature)
     session['history'] = history[:50]  # Keep only the last 50
+    app.logger.info(f"Generated: {chosen_creature} for {request.remote_addr}")
     return jsonify({"creature_type": chosen_creature, "history": session['history']})
 
 # API endpoint to reset the session history
 @app.route('/api/reset', methods=['POST'])
 def reset_history():
     session['history'] = []
+    app.logger.info(f"History reset by {request.remote_addr}")
     return jsonify({"success": True})
+
+@app.errorhandler(500)
+def internal_error(error):
+    app.logger.error(f"Server Error: {error}, Path: {request.path}")
+    return jsonify({"error": "Internal server error"}), 500
 
 if __name__ == '__main__':
     app.run()
