@@ -56,11 +56,10 @@ def generate_creature():
     if not creature_types:
         return jsonify({"error": "No creature types available."}), 500
     chosen_creature = random.choice(creature_types)
-    # Store in session history
     history = session.get('history', [])
     history.insert(0, chosen_creature)
-    session['history'] = history
-    return jsonify({"creature_type": chosen_creature, "history": history})
+    session['history'] = history[:50]  # Keep only the last 50
+    return jsonify({"creature_type": chosen_creature, "history": session['history']})
 
 # API endpoint to reset the session history
 @app.route('/api/reset', methods=['POST'])
