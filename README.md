@@ -14,4 +14,4 @@ This is the main version of the app named "app.py". This version of the applicat
 
 ## Other Versions
 
-Other versions of the Creature Type Generator are the basic terminal version, and the desktop app version that uses the Kivy GUI library. They can both be run independently on any windows machine as long as the appropriate dependencies are installed.
+Other versions of the Creature Type Generator are the basic terminal version, and the desktop app version that uses the Kivy GUI library. They can both be run independently on any windows machine as long as the appropriate dependencies are installed, and the creature_types.txt file is in the same directory folder.
