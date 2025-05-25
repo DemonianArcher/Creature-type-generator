@@ -28,14 +28,19 @@ from flask import Flask, jsonify, render_template, session, request
 from flask_cors import CORS
 import random
 import logging
+from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY")
-CORS(app, origins=[os.environ.get("CORS_ORIGIN")])  # Allows CORS for the specified origin
+CORS(app, origins=["http://127.0.0.1:8000/"])  # Allows CORS for the specified origin
 
-# Configure logging to work with Flask's logger
+# Configure logging to work with Flask's logger and rotate logs
 log_formatter = logging.Formatter('%(asctime)s %(levelname)s:%(message)s')
-file_handler = logging.FileHandler('app.log')
+log_file = 'app.log'
+max_bytes = 1 * 1024 * 1024  # 1 MB per log file
+backup_count = 3             # Keep up to 3 old log files
+
+file_handler = RotatingFileHandler(log_file, maxBytes=max_bytes, backupCount=backup_count)
 file_handler.setFormatter(log_formatter)
 file_handler.setLevel(logging.INFO)
 
