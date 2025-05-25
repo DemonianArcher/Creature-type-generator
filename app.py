@@ -45,10 +45,12 @@ with open("creature_types.txt", "r", encoding="utf-8") as file:
 def log_request_info():
     logging.info(f"{session.get('history', [])} - {request.method} {request.path} from {request.remote_addr}")
 
+# Render the main page via the template in index.html
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# API endpoint to generate a random creature type
 @app.route('/api/generate', methods=['GET'])
 def generate_creature():
     if not creature_types:
@@ -60,6 +62,7 @@ def generate_creature():
     session['history'] = history
     return jsonify({"creature_type": chosen_creature, "history": history})
 
+# API endpoint to reset the session history
 @app.route('/api/reset', methods=['POST'])
 def reset_history():
     session['history'] = []
