@@ -1,4 +1,27 @@
-"""This is the flask backend for the web application version of the creature type generator app."""
+"""
+app.py
+------
+
+Flask backend for the Magic: The Gathering Creature Type Generator web application.
+
+This application provides API endpoints to generate random creature types and manage per-user session history.
+It is intended to be run behind a WSGI server such as Waitress or Gunicorn.
+
+Endpoints:
+    /                - Serves the main web page.
+    /api/generate    - GET: Returns a random creature type and updates session history.
+    /api/reset       - POST: Clears the session history for the user.
+
+Environment Variables:
+    FLASK_SECRET_KEY - Secret key for Flask session management.
+
+Logging:
+    Requests and activity are logged to app.log.
+
+Author: Avery Cloutier
+Version: 1.0.0
+Date: 2025-05-25
+"""
 
 import os
 from flask import Flask, jsonify, render_template, session, request
@@ -7,7 +30,7 @@ import random
 import logging
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev")
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 CORS(app, origins=["http://127.0.0.1:8000/"]) # Allows CORS for the specified origin
 
 # Configure logging
